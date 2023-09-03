@@ -4,15 +4,18 @@
 
 ```
 multipass launch -n jenkins -c 2 -m 4G -d 40G jammy
-Multipass shell jenkins
-Sudo apt update
-Sudo apt install openjdk-11-jdk
-wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add –
-sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list’
+multipass shell jenkins
 sudo apt update
-sudo apt install Jenkins
-sudo systemctl start Jenkins
-sudo systemctl enable Jenkins
+sudo apt install openjdk-17-jre -y
+curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee \
+  /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \
+  https://pkg.jenkins.io/debian-stable binary/ | sudo tee \
+  /etc/apt/sources.list.d/jenkins.list > /dev/null
+sudo apt-get update
+sudo apt-get install jenkins -y
+sudo systemctl start jenkins
+sudo systemctl enable jenkins
 sudo ufw allow 8080
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword (Récupérer le mot de passe initial)
 ```
@@ -38,14 +41,14 @@ packages:
   - python3-pip
   - python3-venv
   - net-tools
-  - openjdk-11-jdk
+  - openjdk-17-jre
 
 write_files:
   - content: |
       #!/bin/bash
 
-      wget -q -O - https://pkg.jenkins.io/debian/jenkins.io.key | sudo apt-key add -
-      sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+      curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+      echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
       sudo apt update
       sudo apt install jenkins
       sudo systemctl start jenkins
@@ -61,7 +64,7 @@ runcmd:
 ##### command
 
 multipass launch -n jenkins -c 2 -m 4G -d 40G --cloud-init init-jenkins.yml  jammy
-Multipass shell jenkins
+multipass shell jenkins
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
 ```
