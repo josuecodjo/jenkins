@@ -5,7 +5,7 @@ pipeline {
       parallel {
         stage('msg1') {
           steps {
-            sh 'echo "Launchin the script....."'
+            sh 'echo "Launching the script....."'
           }
         }
 
