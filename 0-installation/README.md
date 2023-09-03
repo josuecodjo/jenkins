@@ -71,6 +71,6 @@ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 - Avec Docker
 
 ```
-Docker run –d –name jenkins –p 8888:8080 –v $PWD/var/jenkins_home jenkins/jenkins:lts-jdk11
-Docker exec –it jenkins cat /var/lib/jenkins/secrets/initialAdminPassword
+docker run -d --name jenkins -p 8888:8080 -v jenkins-vol1:/var/jenkins_home jenkins/jenkins:lts-jdk11
+docker exec -it jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 ```
