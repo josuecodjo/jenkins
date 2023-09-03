@@ -24,7 +24,7 @@ books = [
 
 @app.route('/')
 def web_root():
-    return 'Web App with Python Flask!'
+    return 'Web AppS with Python Flask!'
 @app.route('/data')
 def web_data():
     return 'Hello here is my data!'
