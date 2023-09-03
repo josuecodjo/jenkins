@@ -2,7 +2,7 @@
 
 ## Getting started
 
-To run the project follow these commands:
+- To run the project follow these commands:
 
 ```
 cd 1.1-ci
