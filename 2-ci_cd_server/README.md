@@ -5,12 +5,16 @@
 - To run the project follow these commands:
 
 ```
-cd 1.2-ci_test
-pip install -r requirements.txt
-python3 -m pytest --setup-plan --disable-warnings
-python3 -m pytest --disable-warnings --collect-only
-python3 -m coverage run -m pytest --disable-warnings -v
-python3 -m coverage report
-python3 -m coverage xml
-python3 -m pytest --junitxml=report.xml --disable-warnings -v
+multipass launch -n qa -c 1 -m 2G -d 10G jammy
+multipass shell qa
+sudo apt update
+sudo apt install –y python3 python3-pip python3-venv git
+sudo apt install –y nodejs npm
+sudo npm install pm2 –g
+sudo pm2 startup
+git clone https://github.com/josuecodjo/jenkins.git
+cp -rf jenkins/2-ci_cd_server /home/ubuntu/qa
+cd /home/ubuntu/qa
+pip install –r requirements.txt
+pm2 start "python3 -m flask run --host 0.0.0.0 --port 5400" --name "py_app_qa" --watch
 ```
