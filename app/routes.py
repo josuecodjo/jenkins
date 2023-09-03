@@ -22,7 +22,7 @@ books = [
 ]
 
 @app.route('/qa')
-def web_root():
+def web_qa():
     return 'Web App on teste le qa!'
 @app.route('/')
 def web_root():
