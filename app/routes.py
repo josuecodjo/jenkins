@@ -21,7 +21,9 @@ books = [
     }
 ]
 
-
+@app.route('/qa')
+def web_root():
+    return 'Web App on teste le qa!'
 @app.route('/')
 def web_root():
     return 'Web App with Python Flask!'
